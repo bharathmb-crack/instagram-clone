@@ -1,6 +1,8 @@
 import React from "react";
 import Posts from "./Posts";
 import Storeies from "./Storeies";
+import MiniPorfile from "./MiniPorfile";
+import Suggestions from "./Suggestions";
 
 const Feed = () => {
   return (
@@ -11,9 +13,11 @@ const Feed = () => {
         <Posts />
       </section>
 
-      <section>
-        {/* mini profile */}
-        {/* suggestion */}
+      <section className="hidden xl:inline-grid md:col-span-1">
+        <div className="fixed top-20">
+          <MiniPorfile />
+          <Suggestions />
+        </div>
       </section>
     </main>
   );
