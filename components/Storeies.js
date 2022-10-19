@@ -39,7 +39,7 @@ const Storeies = () => {
   }, []);
 
   return (
-    <div className="flex overflow-x-scroll space-x-2">
+    <div className="flex overflow-x-scroll scrollbar-thin scrollbar-thumb-black space-x-2 p-6 bg-white mt-8 border-gray-200 border rounded-sm ">
       {suggestStories &&
         suggestStories.map((profile) => (
           <Story key={profile.id} img={image[profile.id]} name={profile.name} />
