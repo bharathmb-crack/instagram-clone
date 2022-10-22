@@ -1,17 +1,22 @@
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 const MiniPorfile = () => {
+  const { data: session } = useSession();
   return (
     <div className="flex items-center justify-between mt-14 ml-10 space-x-3">
       <img
-        src="https://i.postimg.cc/PTCjF9f4/Whats-App-Image-2022-05-09-at-2-08-10-PM.jpg"
+        src={session?.user?.image}
         alt=""
         className="h-12 object-contain rounded-full "
       />
       <div>
-        <p className="font-semibold ">Bharath Byahatti</p>
+        <p className="font-semibold ">{session?.user?.username}</p>
         <p className="text-sm text-gray-700">Frontend Enthusist! Pro Cooking</p>
       </div>
 
-      <button className="font-semibold text-cyan-600">sign out</button>
+      <button onClick={signOut} className="font-semibold text-cyan-600">
+        sign out
+      </button>
     </div>
   );
 };
