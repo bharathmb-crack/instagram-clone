@@ -1,6 +1,7 @@
 import faker from "faker";
 import { useState, useEffect } from "react";
 import Story from "./Story";
+import { useSession } from "next-auth/react";
 
 export const image = [
   "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
@@ -27,6 +28,7 @@ export const image = [
 
 const Storeies = () => {
   const [suggestStories, setSuggeststoreies] = useState([]);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const suggestions = [...Array(20)].map((_, i) => ({
@@ -41,6 +43,10 @@ const Storeies = () => {
 
   return (
     <div className="flex overflow-x-scroll scrollbar-thin scrollbar-thumb-black space-x-2 p-6 bg-white mt-8 border-gray-200 border rounded-sm ">
+      {session && (
+        <Story img={session.user.image} name={session.user.username} />
+      )}
+
       {suggestStories &&
         suggestStories.map((profile) => (
           <Story key={profile.id} img={image[profile.id]} name={profile.name} />
