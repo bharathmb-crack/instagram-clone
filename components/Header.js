@@ -8,8 +8,12 @@ import {
   HeartIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
+import { useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 const Header = () => {
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <div className="shadow-sm border-b bg-white sticky top-0 z-50">
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
@@ -46,20 +50,27 @@ const Header = () => {
         <div className="flex items-center justify-end space-x-4">
           <HomeIcon className="navBtn" />
           <MenuIcon className="h-6 w-6 md:hidden cursor-pointer" />
-          <div className="relative navBtn">
-            <PaperAirplaneIcon className="navBtn rotate-45" />
-            <div className="absolute -top-1 -right-2 bg-red-500 rounded-full h-5 w-5 flex items-center justify-center text-white animate-pulse ">
-              3
-            </div>
-          </div>
-          <PlusCircleIcon className="navBtn" />
-          <UserGroupIcon className="navBtn" />
-          <HeartIcon className="navBtn" />
-          <img
-            className=" w-8 h-8 rounded-full hidden md:inline-flex"
-            src="https://images.unsplash.com/photo-1555952517-2e8e729e0b44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-            alt=""
-          />
+          {session ? (
+            <>
+              <div className="relative navBtn">
+                <PaperAirplaneIcon className="navBtn rotate-45" />
+                <div className="absolute -top-1 -right-2 bg-red-500 rounded-full h-5 w-5 flex items-center justify-center text-white animate-pulse ">
+                  3
+                </div>
+              </div>
+              <PlusCircleIcon className="navBtn" />
+              <UserGroupIcon className="navBtn" />
+              <HeartIcon className="navBtn" />
+              <img
+                onClick={signOut}
+                className=" w-8 h-8 rounded-full hidden md:inline-flex cursor-pointer"
+                src={`${session.user.image}`}
+                alt=""
+              />
+            </>
+          ) : (
+            <button onClick={signIn}>sign in</button>
+          )}
         </div>
       </div>
     </div>
